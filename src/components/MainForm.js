@@ -149,7 +149,7 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
           </button>
           {error && (
             <p className="text-danger">
-              Error: The name or number already exists
+              Error: The name or number already exists.
             </p>
           )}
         </div>
