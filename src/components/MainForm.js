@@ -24,6 +24,7 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
       /^1?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
     return phoneRegex.test(number) && number.length === 10;
   };
+
   const handleOnChange = (event) => {
     const value = event.target.value;
     const phoneNumber = value.replace(/[^0-9]/g, "");
@@ -31,15 +32,15 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
     if (validatePhoneNumber(phoneNumber)) {
       setValidNumber(true);
       setQrLink(
-        `https://api.whatsapp.com/send/?phone=${phoneNumber}8&text&type=phone_number&app_absent=0`
+        `https://api.whatsapp.com/send/?phone=${phoneNumber}&text&type=phone_number&app_absent=0`
       );
     } else {
       setValidNumber(false);
       setQrLink("");
     }
   };
+
   const saveContact = () => {
-    // [ {name:"name1",number:3487236},...]
     let phoneNumber = countryCode + number;
     let savedContacts = localStorage.getItem("savedContacts");
     let savedContactsArray = savedContacts ? JSON.parse(savedContacts) : [];
@@ -79,7 +80,7 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
   return (
     <div className="col-lg-6 py-3">
       <div className="row">
-        <div className="col-sm-4">
+        <div className="col-md-4">
           <div className="row">
             <div className="col-12">
               <p className="text-dark text-sm">Country</p>
@@ -91,29 +92,29 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
                 placeholder="Country Code"
               />
             </div>
-            <div className="col-12 d-sm-block d-none">
+            <div className="col-12 d-md-block d-none">
               {validNumber ? (
                 <img
-                  className="w-75 p-1 rounded"
+                  className="w-100 p-1 rounded"
                   src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrLink}&size=720x720`}
                   alt="Loading QR"
                 />
               ) : (
                 <p className="p-2">
-                  Enter valid number to get QR ( Scan and Chat )
+                  Enter valid number to get QR (Scan and Chat)
                 </p>
               )}
             </div>
           </div>
         </div>
-        <div className="col-sm-8">
+        <div className="col-md-8">
           <p className="text-dark text-sm">Phone Number</p>
           <input
             onChange={handleOnChange}
             value={number}
             type="tel"
             className="form-control"
-            placeholder="Enter valid number (10 digits )"
+            placeholder="Enter valid number (10 digits)"
           />
           <a
             onClick={() => {
@@ -123,11 +124,11 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
             rel="noreferrer"
             target="_blank"
             href={`http://wa.me/${countryCode + number}`}
-            className={`btn btn-success my-3 m-auto w-100 ${
+            className={`btn btn-success my-3 w-100 ${
               validNumber ? "" : "disabled"
             }`}
           >
-            <i className="bi bi-whatsapp" /> Chat on whatsapp
+            <i className="bi bi-whatsapp" /> Chat on WhatsApp
           </a>
           <input
             onChange={(event) => {
